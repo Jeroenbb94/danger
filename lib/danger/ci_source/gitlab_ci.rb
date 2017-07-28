@@ -18,10 +18,14 @@ module Danger
   # Add the `DANGER_GITHUB_API_TOKEN` to your pipeline env variables.
   class GitLabCI < CI
     def self.validates_as_ci?(env)
+      puts "validates_as_ci"
+      puts env.to_yaml
       env.key? "GITLAB_CI"
     end
 
     def self.validates_as_pr?(env)
+      puts "validates_as_pr"
+      puts env.to_yaml
       exists = [
         "GITLAB_CI", "CI_PROJECT_ID"
       ].all? { |x| env[x] }
@@ -30,6 +34,8 @@ module Danger
     end
 
     def self.determine_merge_request_id(env)
+      puts "determine_merge_request_id"
+      puts env.to_yaml
       return env["CI_MERGE_REQUEST_ID"] if env["CI_MERGE_REQUEST_ID"]
       return 0 unless env["CI_COMMIT_SHA"]
 
@@ -46,6 +52,8 @@ module Danger
     end
 
     def initialize(env)
+      puts "initialize"
+      puts env.to_yaml
       self.repo_slug = env["CI_PROJECT_ID"]
       self.pull_request_id = self.class.determine_merge_request_id(env)
     end
