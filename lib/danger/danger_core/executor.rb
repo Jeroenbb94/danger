@@ -14,7 +14,7 @@ module Danger
             new_comment: nil,
             fail_on_errors: nil)
       # Create a silent Cork instance if cork is nil, as it's likely a test
-      cork ||= Cork::Board.new(silent: false, verbose: false)
+      cork ||= Cork::Board.new(silent: false, verbose: true)
 
       # Run some validations
       validate!(cork)
@@ -59,7 +59,7 @@ module Danger
     def validate_pr!(cork)
       unless EnvironmentManager.pr?(system_env)
         # cork.puts "Not a Pull Request - skipping `danger` run".yellow
-        cork.puts cork.inspect
+        cork.puts cork.to_yaml
         exit(0)
       end
     end
