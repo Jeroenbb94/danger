@@ -59,7 +59,8 @@ module Danger
     def validate_pr!(cork)
       unless EnvironmentManager.pr?(system_env)
         cork.puts "Not a Pull Request - skipping `danger` run".yellow
-        cork.puts EnvironmentManager.local_ci_source.to_yaml
+        cork.puts EnvironmentManager.local_ci_source(system_env).to_yaml
+        cork.puts EnvironmentManager.pr?(system_env).to_yaml
         cork.puts EnvironmentManager.danger_base_branch.to_yaml
         cork.puts user_specified_base_branch
         cork.puts EnvironmentManager.danger_head_branch.to_yaml
